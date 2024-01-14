@@ -37,3 +37,5 @@ def test_case4():
 def test_instantiate_from_csv():
     Item.instantiate_from_csv(DATA_DIR)
     assert len(Item.all) == 5
+    item2 = Item.all[0]
+    assert item2.name == 'Смартфон'
