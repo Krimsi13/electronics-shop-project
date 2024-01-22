@@ -12,3 +12,8 @@ def test_case1():
         phone1.number_of_sim = 0
     with pytest.raises(ValueError):
         phone1.number_of_sim = 2.0
+
+
+def test_number_of_sim():
+    phone1.number_of_sim = 5
+    assert phone1.number_of_sim == 5
