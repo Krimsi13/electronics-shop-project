@@ -1,12 +1,16 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 import pytest
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 from config import ROOT_DIR
 import os.path
 
 from src.phone import Phone
 
 DATA_DIR = os.path.join(ROOT_DIR, "src", "items.csv")
+DATA_DIR_2 = os.path.join(ROOT_DIR, "src", "item.csv")
+DATA_DIR_3 = os.path.join(ROOT_DIR, "src", "items_2.csv")
+
+
 
 item1 = Item("Banana", 8.95, 4)
 
@@ -41,6 +45,13 @@ def test_instantiate_from_csv():
     assert len(Item.all) == 5
     item2 = Item.all[0]
     assert item2.name == 'Смартфон'
+
+
+def test_instantiate_from_csv_case_2():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv(DATA_DIR_2)
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv(DATA_DIR_3)
 
 
 def test_case5():

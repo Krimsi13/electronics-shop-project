@@ -1,4 +1,9 @@
 import csv
+import os.path
+
+
+class InstantiateCSVError(Exception):
+    pass
 
 
 class Item:
@@ -52,10 +57,17 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls, csvfile):
         cls.all.clear()
+        if not os.path.exists(csvfile):
+            raise FileNotFoundError(f"_Отсутствует данный файл_")
+
         with open(csvfile, newline='', encoding="windows-1251") as file:
             reader = csv.DictReader(file)
             for row in reader:
+                if len(row) != 3:
+                    raise InstantiateCSVError(f"_Данный файл поврежден_")
                 cls(row['name'], row['price'], row['quantity'])
+        # except FileNotFoundError:
+        #     print(f"_Отсутствует данный файл_")
 
     @staticmethod
     def string_to_number(string_int: str) -> int:
